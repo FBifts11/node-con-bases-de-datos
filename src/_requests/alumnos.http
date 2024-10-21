@@ -1,0 +1,36 @@
+@api = http://localhost:3000
+
+GET {{api}}/alumnos
+
+###
+POST {{api}}/alumnos
+Content-Type: application/json
+
+{
+    "nombre": "Casmiro Quefort",
+    "materia_id": 2,
+    "turno_id": 1,
+    "comision": "C",
+    "debe_correlativa": false
+}
+
+###
+GET {{api}}/alumnos/55
+
+###
+DELETE {{api}}/alumnos/6
+
+###
+PUT {{api}}/alumnos/1
+Content-Type: application/json
+
+{
+    "nombre": "Alicia Noemi Robles",
+    "materia_id": 2,
+    "turno_id": 1,
+    "comision": "C",
+    "debe_correlativa": true
+}
+
+###
+GET {{api}}/alumnosjoin

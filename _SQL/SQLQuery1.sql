@@ -1,0 +1,78 @@
+-- Crear DB
+CREATE DATABASE IFTS11
+
+-- Crear tabla Materias
+USE IFTS11
+
+CREATE TABLE Materias (
+ID INT IDENTITY (1,1) PRIMARY KEY,
+NOMBRE VARCHAR(50) NOT NULL
+)
+
+-- Crear tabla Turnos
+CREATE TABLE Turnos (
+ID INT IDENTITY (1,1) PRIMARY KEY,
+NOMBRE VARCHAR(50) NOT NULL
+)
+
+--Crear tabla Alumnos
+CREATE TABLE Alumnos (
+ID INT IDENTITY (1,1) PRIMARY KEY,
+NOMBRE VARCHAR(50) NOT NULL,
+MATERIA_ID INT NOT NULL,
+TURNO_ID INT NOT NULL,
+COMISION CHAR NOT NULL,
+DEBE_CORRELATIVA BIT NOT NULL,
+FOREIGN KEY (MATERIA_ID) REFERENCES Materias(ID),
+FOREIGN KEY (TURNO_ID) REFERENCES Turnos(ID)
+)
+
+--Intertar datos en tabla Materias
+INSERT INTO Materias (NOMBRE) VALUES ('Backend')
+INSERT INTO Materias (NOMBRE) VALUES ('Frontend')
+
+--Intertar datos en tabla Turnos
+INSERT INTO Turnos (NOMBRE) VALUES ('Mañana')
+INSERT INTO Turnos (NOMBRE) VALUES ('Tarde')
+INSERT INTO Turnos (NOMBRE) VALUES ('Noche')
+
+--Intertar datos en tabla Alumnos
+INSERT INTO Alumnos (NOMBRE, MATERIA_ID, TURNO_ID, COMISION, DEBE_CORRELATIVA) VALUES ('Alicia Noemi Robles', 1, 3, 'C', 0)
+INSERT INTO Alumnos (NOMBRE, MATERIA_ID, TURNO_ID, COMISION, DEBE_CORRELATIVA) VALUES ('Mario Fortunato', 2, 2, 'A', 1)
+INSERT INTO Alumnos (NOMBRE, MATERIA_ID, TURNO_ID, COMISION, DEBE_CORRELATIVA) VALUES ('Alcides Gioia', 1, 2, 'B', 0)
+INSERT INTO Alumnos (NOMBRE, MATERIA_ID, TURNO_ID, COMISION, DEBE_CORRELATIVA) VALUES ('Julio Rodriguez', 2, 3, 'A', 1)
+
+-- Consultas 
+
+SELECT 1
+----
+SELECT * FROM Alumnos
+SELECT * FROM Turnos
+SELECT * FROM Materias
+
+----
+
+DECLARE @ID INT;
+SET @ID = 3;
+
+SELECT * FROM Alumnos WHERE ID = @ID;
+
+----
+
+SELECT
+a.ID,
+a.NOMBRE,
+m.NOMBRE AS MATERIA,
+t.NOMBRE AS TURNO,
+a.COMISION,
+CASE 
+	WHEN a.DEBE_CORRELATIVA = 1 THEN 'Sí'
+        ELSE 'No'
+    END AS DEBE_CORRELATIVA
+FROM Alumnos a
+JOIN
+Turnos t ON a.turno_id = t.id
+JOIN
+Materias m ON a.materia_id = m.id 
+
+----
